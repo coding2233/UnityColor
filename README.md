@@ -1,4 +1,3 @@
-﻿# UnityColor
 unity使用UGUI自制调色面板板，像PS的调色面板，对不对
 
 下面是两张截图:
