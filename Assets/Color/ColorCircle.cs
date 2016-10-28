@@ -40,4 +40,9 @@ public class ColorCircle : MonoBehaviour, IDragHandler
         getPos(rt.anchoredPosition);
     }
 
+    public void setShowColor()
+    {
+        getPos(rt.anchoredPosition);
+    }
+
 }

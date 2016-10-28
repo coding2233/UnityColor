@@ -21,11 +21,7 @@ public class ColorRGB : MonoBehaviour {
         ri.texture = tex2d;
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
+    
     Color[] CalcArrayColor()
     {
         int addValue = (TexPixelHeight - 1) / 3;
@@ -81,7 +77,7 @@ public class ColorRGB : MonoBehaviour {
     /// <returns></returns>
     public Color GetColorBySliderValue(float value)
     {
-        Color getColor=tex2d.GetPixel(0,(int)((TexPixelHeight-1)*value));
+        Color getColor=tex2d.GetPixel(0,(int)((TexPixelHeight-1)*(1.0f-value)));
         return getColor;
     }
 }

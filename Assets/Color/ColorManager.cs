@@ -25,7 +25,7 @@ public class ColorManager : MonoBehaviour, IDragHandler
         Color getColor= CP.GetColorByPosition(pos);
         colorShow.color = getColor;
     }
-
+    
     // Use this for initialization
     void Start () {
         rt = GetComponent<RectTransform>();
@@ -39,11 +39,6 @@ public class ColorManager : MonoBehaviour, IDragHandler
         CC.getPos += CC_getPos;
     }
 	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
-
     public void OnDrag(PointerEventData eventData)
     {
         //Vector3 wordPos;
@@ -56,5 +51,6 @@ public class ColorManager : MonoBehaviour, IDragHandler
     {
         Color endColor=CRGB.GetColorBySliderValue(value);
         CP.SetColorPanel(endColor);
+        CC.setShowColor();
     }
 }

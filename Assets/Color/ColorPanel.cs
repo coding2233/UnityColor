@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
-public class ColorPanel : MonoBehaviour {
+using UnityEngine.EventSystems;
+public class ColorPanel : MonoBehaviour, IPointerClickHandler{
     Texture2D tex2d;
     public RawImage ri;
 
     int TexPixelLength = 256;
     Color[,] arrayColor;
-	// Use this for initialization
-	void Start () {
+
+    RectTransform rt;
+    public RectTransform circleRect;
+    // Use this for initialization
+    void Start () {
         arrayColor = new Color[TexPixelLength, TexPixelLength];
         tex2d = new Texture2D(TexPixelLength, TexPixelLength, TextureFormat.RGB24,true);
         ri.texture = tex2d;
+
+        rt = GetComponent<RectTransform>();
 
         SetColorPanel(Color.red);
     }
@@ -76,4 +81,13 @@ public class ColorPanel : MonoBehaviour {
         return getColor;
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Vector3 wordPos;
+        //将UGUI的坐标转为世界坐标  
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rt, eventData.position, eventData.pressEventCamera, out wordPos))
+            circleRect.position = wordPos;
+
+        circleRect.GetComponent<ColorCircle>().setShowColor();
+    }
 }
