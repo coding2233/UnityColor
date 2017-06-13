@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class ColorPanel : MonoBehaviour, IPointerClickHandler{
+public class ColorPanel : MonoBehaviour, IPointerClickHandler, IDragHandler
+{
     Texture2D tex2d;
     public RawImage ri;
 
@@ -12,24 +13,26 @@ public class ColorPanel : MonoBehaviour, IPointerClickHandler{
     RectTransform rt;
     public RectTransform circleRect;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         arrayColor = new Color[TexPixelLength, TexPixelLength];
-        tex2d = new Texture2D(TexPixelLength, TexPixelLength, TextureFormat.RGB24,true);
+        tex2d = new Texture2D(TexPixelLength, TexPixelLength, TextureFormat.RGB24, true);
         ri.texture = tex2d;
 
         rt = GetComponent<RectTransform>();
 
         SetColorPanel(Color.red);
     }
-	
-	// Update is called once per frame
-	void Update () {
-	    if(Input.GetKeyDown(KeyCode.Space))
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Color end = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f),1.0f);
+            Color end = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1.0f);
             SetColorPanel(end);
         }
-	}
+    }
 
     public void SetColorPanel(Color endColor)
     {
@@ -63,7 +66,7 @@ public class ColorPanel : MonoBehaviour, IPointerClickHandler{
                 listColor.Add(arrayColor[j, i]);
             }
         }
-        
+
         return listColor.ToArray();
     }
 
@@ -82,6 +85,16 @@ public class ColorPanel : MonoBehaviour, IPointerClickHandler{
     }
 
     public void OnPointerClick(PointerEventData eventData)
+    {
+        Vector3 wordPos;
+        //将UGUI的坐标转为世界坐标  
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rt, eventData.position, eventData.pressEventCamera, out wordPos))
+            circleRect.position = wordPos;
+
+        circleRect.GetComponent<ColorCircle>().setShowColor();
+    }
+
+    public void OnDrag(PointerEventData eventData)
     {
         Vector3 wordPos;
         //将UGUI的坐标转为世界坐标  
